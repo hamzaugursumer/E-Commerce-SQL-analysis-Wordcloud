@@ -154,6 +154,11 @@ product_category_name öğesini İngilizceye çevirir.
 
 # 🚀 **Case Studies**
 
+## 📌 **Olist Veri Seti ERD Diyagramı :** 
+
+![image](https://github.com/hamzaugursumer/SQL-Capstone-Project/assets/127680099/5f55f838-2e01-44fd-bb82-93d42b03bb50)
+
+
 ## 📌**Case 1 : Sipariş Analizi**
 
 * 🔅 **Question 1 :**
