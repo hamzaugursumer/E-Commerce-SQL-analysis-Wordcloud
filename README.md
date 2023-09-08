@@ -157,6 +157,7 @@ product_category_name öğesini İngilizceye çevirir.
 ## 📌**Case 1 : Sipariş Analizi**
 
 * 🔅 **Question 1 :**
+
 Aylık olarak order dağılımını inceleyiniz.
 ````sql
 select 
@@ -196,6 +197,7 @@ order by 1
 |  24   |  2018-09  |      1      |
 
 * 🔅 **Question 2 :**
+
 Aylık olarak order status kırılımında order sayılarını inceleyiniz. 
 ````sql
 select  
@@ -223,6 +225,7 @@ order by 1
 * Toplamda 129 satırlık çıktının sadece 10 satırı görüntülenmektedir.
 
 * 🔅 **Question 3 :**
+
 Ürün kategorisi kırılımında sipariş sayılarını inceleyiniz.
 ````sql
 -- kategori bazlı order sayısı
@@ -300,6 +303,7 @@ order by 1 desc
 * Toplamda 58 satırlık çıktının 10 satırı görüntülenmektedir.
 
 * 🔅 **Question 4 :**
+
 Haftanın günleri bazında order sayılarını inceleyiniz.
 ````sql
 select 
@@ -325,3 +329,126 @@ order by 1 DESC
 
 ![image](https://github.com/hamzaugursumer/SQL-Capstone-Project/assets/127680099/dfef4da6-f2f8-4360-98f6-2598adf7c7ac)
 
+## 📌**Case 2 : Müşteri Analizi**
+
+* 🔅 **Question 1 :**
+
+Hangi şehirlerdeki müşteriler daha çok alışveriş yapıyor? 
+Müşterinin şehrini en çok sipariş verdiği şehir olarak belirleyip analizi ona göre yapınız. 
+````sql
+WITH city_and_order as (
+select 
+	cs.customer_unique_id,
+    cs.customer_city,
+    count(o.order_id) as order_count
+from customers cs
+left join orders o
+on o.customer_id = cs.customer_id
+group by 1,2
+order by 3 desc
+),
+customer_city as (
+select 
+	customer_unique_id,
+    customer_city,
+    order_count,
+    row_number() over(partition by customer_unique_id order by order_count desc) as rn
+from city_and_order
+),
+city_of_customer as (
+select 
+	customer_unique_id, 
+	customer_city 
+	from customer_city 
+	where rn=1
+)
+select 
+	cs.customer_city,
+    count(distinct o.order_id) as order_count
+from city_of_customer as cs
+left join customers as c
+on c.customer_unique_id = cs.customer_unique_id
+left join orders AS o
+on c.customer_id = o.customer_id
+group by 1
+order by 2 desc
+;
+````
+|       |   customer_city     | order_count |
+|-------|---------------------|-------------|
+|   1   |     "sao paulo"     |    15536    |
+|   2   | "rio de janeiro"    |    6881     |
+|   3   |  "belo horizonte"   |    2776     |
+|   4   |     "brasilia"      |    2130     |
+|   5   |     "curitiba"      |    1521     |
+|   6   |     "campinas"      |    1442     |
+|   7   |  "porto alegre"     |    1379     |
+|   8   |     "salvador"      |    1243     |
+|   9   |    "guarulhos"      |    1188     |
+|  10   | "sao bernardo do campo" |  938     |
+* Toplamda 4119 satırlık çıktının 10 satırı görüntülenmektedir.
+
+* 🔅 **Question 2 :**
+
+Müşteri bazlı siparişlerin kategorilerini inceleyiniz. 
+Müşteriler genellikle aynı kategorideki ürünlerin siparişini mi veriyor? 
+Her müşteri için sipariş kategori yüzdesini hesaplayın. 
+````sql
+with table1 as 
+(
+select 
+	distinct customer_unique_id, 
+	p.product_category_name,
+    count(distinct o.order_id) as order_count
+from customers as c
+left join orders as o
+ON o.customer_id = c.customer_id
+left join order_items as oi
+ON oi.order_id = o.order_id
+left join products as p
+ON p.product_id = oi.product_id
+where product_category_name is not null and
+o.order_status !='cancelled'	
+group by 1,2
+),
+table2 as 
+(
+select 
+	distinct c.customer_unique_id,
+    count(distinct o.order_id) as total_order_count
+from customers as c
+left join orders as o
+ON c.customer_id = o.customer_id
+where o.order_status !='cancelled'
+group by 1
+)
+select 
+	table1.customer_unique_id,
+	table1.product_category_name,
+	table1.order_count,
+	table2.total_order_count,
+	row_number() over (partition by table1.customer_unique_id order by table1.order_count desc) as rn,
+    round((table1.order_count*1.0/table2.total_order_count*1.0),2)*100 as category_value
+from table1
+left join table2 
+ON table1.customer_unique_id = table2.customer_unique_id
+order by 4 desc
+;
+````
+|       |       customer_unique_id       |       product_category_name       | order_count | total_order_count | rn  | category_value |
+|-------|---------------------------------|-----------------------------------|-------------|-------------------|----|----------------|
+|   1   |  "8d50f5eadf50201ccdcedfb9e2ac8455" |   "fashion_bolsas_e_acessorios"   |      3      |        17         |  2 |      18.00     |
+|   2   |  "8d50f5eadf50201ccdcedfb9e2ac8455" |          "esporte_lazer"          |      11     |        17         |  1 |      65.00     |
+|   3   |  "8d50f5eadf50201ccdcedfb9e2ac8455" | "construcao_ferramentas_ferramentas"|      1      |        17         |  3 |       6.00     |
+|   4   |  "3e43e6105506432c953e165fb2acf44c" |      "casa_construcao"            |      1      |        9          |  4 |      11.00     |
+|   5   |  "3e43e6105506432c953e165fb2acf44c" |    "utilidades_domesticas"        |      1      |        9          |  3 |      11.00     |
+|   6   |  "3e43e6105506432c953e165fb2acf44c" |       "cama_mesa_banho"           |      4      |        9          |  1 |      44.00     |
+|   7   |  "3e43e6105506432c953e165fb2acf44c" |      "moveis_decoracao"           |      3      |        9          |  2 |      33.00     |
+|   8   |  "3e43e6105506432c953e165fb2acf44c" | "informatica_acessorios"          |      1      |        9          |  5 |      11.00     |
+|   9   |  "1b6c7548a2a1f9037c1fd3ddfed95f33" |         "beleza_saude"            |      1      |        7          |  2 |      14.00     |
+|  10   |  "1b6c7548a2a1f9037c1fd3ddfed95f33" |      "moveis_decoracao"           |      3      |        7          |  1 |      43.00     |
+* Toplamda 96470 satırlık çıktının 10 satırı görüntülenmektedir.
+
+## 🗝️ **Case 2 Dashboard :** 
+
+![image](https://github.com/hamzaugursumer/SQL-Capstone-Project/assets/127680099/5b7ff3a9-f242-4254-801d-e77bec5b773e)
