@@ -333,7 +333,7 @@ order by 1 DESC
 
 ## 🗝️ **Case 1 Dashboard :** 
 
-![image](https://github.com/hamzaugursumer/SQL-Capstone-Project/assets/127680099/dfef4da6-f2f8-4360-98f6-2598adf7c7ac)
+![image]((https://github.com/hamzaugursumer/SQL-Capstone-Project/assets/127680099/5267ae3b-05ff-4d36-9295-55ecb635c3a8)
 
 ## 📌**Case 2 : Müşteri Analizi**
 
@@ -457,7 +457,7 @@ order by 4 desc
 
 ## 🗝️ **Case 2 Dashboard :** 
 
-![image](https://github.com/hamzaugursumer/SQL-Capstone-Project/assets/127680099/5b7ff3a9-f242-4254-801d-e77bec5b773e)
+![image](https://github.com/hamzaugursumer/SQL-Capstone-Project/assets/127680099/96d0d2a0-6a45-461f-9b85-9fac16be29ae)
 
 
 ## 📌**Case 3 : Satıcı Analizi**
@@ -544,7 +544,7 @@ order by 2 desc, 3 asc
 
 ## 🗝️ **Case 3 Dashboard :** 
 
-![image](https://github.com/hamzaugursumer/SQL-Capstone-Project/assets/127680099/a91b3aa8-7889-4a26-bbe3-651fafff0b97)
+![image](https://github.com/hamzaugursumer/SQL-Capstone-Project/assets/127680099/32837f6d-84e1-47f0-9d4f-8f0bf948414f)
 
 ## 📌**Case 4 : Payment Analizi**
 
@@ -695,4 +695,5 @@ order by 3 desc
 
 ## 🗝️ **Case 4 Dashboard :** 
 
-![image](https://github.com/hamzaugursumer/SQL-Capstone-Project/assets/127680099/5b772040-5408-4c72-a693-9e69ce40b027)
+![image](https://github.com/hamzaugursumer/SQL-Capstone-Project/assets/127680099/984be859-9369-4f15-bf26-a1400830911f)
+
