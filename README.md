@@ -333,7 +333,7 @@ order by 1 DESC
 
 ## 🗝️ **Case 1 Dashboard :** 
 
-![image]((https://github.com/hamzaugursumer/SQL-Capstone-Project/assets/127680099/5267ae3b-05ff-4d36-9295-55ecb635c3a8)
+![image](https://github.com/hamzaugursumer/SQL-Capstone-Project/assets/127680099/5267ae3b-05ff-4d36-9295-55ecb635c3a8)
 
 ## 📌**Case 2 : Müşteri Analizi**
 
