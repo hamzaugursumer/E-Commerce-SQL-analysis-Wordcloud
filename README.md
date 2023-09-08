@@ -452,3 +452,241 @@ order by 4 desc
 ## 🗝️ **Case 2 Dashboard :** 
 
 ![image](https://github.com/hamzaugursumer/SQL-Capstone-Project/assets/127680099/5b7ff3a9-f242-4254-801d-e77bec5b773e)
+
+
+## 📌**Case 3 : Satıcı Analizi**
+
+* 🔅 **Question 1 :**
+
+Siparişleri en hızlı şekilde müşterilere ulaştıran satıcılar kimlerdir? Top 5 getiriniz. 
+Bu satıcıların order sayıları ile ürünlerindeki yorumlar ve puanlamaları inceleyiniz ve yorumlayınız.
+````sql
+with sellers_tab as (
+select 
+	distinct s.seller_id,
+	extract(day from age(order_delivered_customer_date, order_purchase_timestamp)) AS day_diff
+from orders o
+left join order_items as oi
+	ON oi.order_id = o.order_id
+left join sellers as s 
+	ON s.seller_id = oi.seller_id
+where s.seller_id is not null 
+	and extract(day from age(order_delivered_customer_date, order_purchase_timestamp)) is not null
+	and order_status = 'delivered'
+order by day_diff asc
+limit 5
+)
+select 
+	st.seller_id,
+	count(distinct o.order_id) as count_order,
+	round(avg(or_.review_score),1) avg_score
+	-- or_.review_comment_message
+from sellers_tab as st
+left join order_items as oi
+	ON oi.seller_id = st.seller_id
+left join orders as o
+	ON o.order_id = oi.order_id
+left join order_reviews as or_
+	ON or_.order_id = o.order_id
+where or_.review_id is not null
+and or_.review_comment_message is not null
+group by 1
+order by 2 desc , 3 desc
+;
+````
+|       |           seller_id            | count_order | avg_score |
+|-------|--------------------------------|-------------|-----------|
+|   1   | "001cca7ae9ae17fb1caed9dfb1094831" |     92      |    3.5    |
+|   2   | "0241d4d5d36f10f80c644447315af0bd" |     89      |    3.9    |
+|   3   | "004c9cd9d87a3c30c522c48c4fc07416" |     60      |    3.7    |
+|   4   | "00ee68308b45bc5e2660cd833c3f81cc" |     50      |    4.0    |
+|   5   | "01fdefa7697d26ad920e9e0346d4bd1b" |     48      |    4.0    |
+
+* 🔅 **Question 2 :**
+
+Hangi satıcılar daha fazla kategoriye ait ürün satışı yapmaktadır? 
+Fazla kategoriye sahip satıcıların order sayıları da fazla mı? 
+````sql
+select 	
+	distinct s.seller_id,
+	count(distinct p.product_category_name) as count_category,
+	count(distinct o.order_id) as count_order
+from sellers as s
+left join order_items as oi
+	ON oi.seller_id = s.seller_id
+left join orders as o
+	ON o.order_id = oi.order_id
+left join products as p
+	ON p.product_id = oi.product_id
+where p.product_category_name is not null
+group by 1
+order by 2 desc, 3 asc
+````
+|       |           seller_id            | count_category | count_order |
+|-------|--------------------------------|----------------|-------------|
+|   1   | "b2ba3715d723d245138f291a6fe42594" |      27        |     337     |
+|   2   | "4e922959ae960d389249c378d1c939f5" |      23        |     405     |
+|   3   | "955fee9216a65b617aa5c0531780ce60" |      23        |    1287     |
+|   4   | "1da3aeb70d7989d1e6d9b0e887f97c23" |      21        |     265     |
+|   5   | "f8db351d8c4c4c22c6835c19a46f01b0" |      19        |     665     |
+|   6   | "18a349e75d307f4b4cc646a691ed4216" |      17        |     121     |
+|   7   | "6edacfd9f9074789dad6d62ba7950b9c" |      15        |     208     |
+|   8   | "70a12e78e608ac31179aea7f8422044b" |      15        |     315     |
+|   9   | "fd386aa7bed2af3c7035c65506c9b4a3" |      14        |      69     |
+|  10   | "2ff97219cb8622eaf3cd89b7d9c09824" |      14        |      89     |
+* Toplamda 3035 satırlık çıktının 10 satırı görüntülenmektedir.
+
+## 🗝️ **Case 3 Dashboard :** 
+
+![image](https://github.com/hamzaugursumer/SQL-Capstone-Project/assets/127680099/a91b3aa8-7889-4a26-bbe3-651fafff0b97)
+
+## 📌**Case 4 : Payment Analizi**
+
+* 🔅 **Question 1 :**
+
+Ödeme yaparken taksit sayısı fazla olan kullanıcılar en çok hangi bölgede yaşamaktadır? 
+````sql
+with customers as (
+select 
+	c.customer_unique_id,
+	payment_installments,
+	c.customer_state,
+	payment_type
+from order_payments op
+left join orders as o 
+ON op.order_id = o.order_id
+left join customers as c
+ON c.customer_id = o.customer_id
+where payment_type = 'credit_card' 
+	and payment_installments = 24
+order by payment_installments desc
+				   )
+select 
+	 customer_state,	
+     count(customer_unique_id) as count_customer
+from customers as c
+group by 1
+order by 2 desc
+;
+````
+|       | customer_state | count_customer |
+|-------|----------------|----------------|
+|   1   |      "SP"      |       4        |
+|   2   |      "RJ"      |       3        |
+|   3   |      "MG"      |       2        |
+|   4   |      "RS"      |       2        |
+|   5   |      "BA"      |       1        |
+|   6   |      "PR"      |       1        |
+|   7   |      "RO"      |       1        |
+|   8   |      "PB"      |       1        |
+|   9   |      "CE"      |       1        |
+|  10   |      "DF"      |       1        |
+|  11   |      "GO"      |       1        |
+
+* 🔅 **Question 2 :**
+ 
+Ödeme tipine göre başarılı order sayısı ve toplam başarılı ödeme tutarını hesaplayınız. 
+````sql
+select 	
+	payment_type,
+	count(distinct o.order_id) as count_order,
+	sum(payment_value) as total_payment_value
+from order_payments as op
+left join orders as o
+ON o.order_id = op.order_id
+where o.order_status not in ('unavailable','cancelled')
+group by 1
+order by 2 desc
+````
+|       | payment_type  | count_order | total_payment_value |
+|-------|---------------|-------------|---------------------|
+|   1   | "credit_card" |    76062    |     12,447,417.87   |
+|   2   |   "boleto"    |    19634    |     2,844,306.40    |
+|   3   |   "voucher"   |    3839     |      375,539.32     |
+|   4   | "debit_card"  |    1522     |      215,129.02     |
+|   5   | "not_defined" |      3      |         0.00        |
+
+* 🔅 **Question 3 :**
+
+Tek çekimde ve taksitle ödenen siparişlerin kategori bazlı analizini yapınız. 
+En çok hangi kategorilerde taksitle ödeme kullanılmaktadır?
+
+````sql
+-- tek çekimde ödenen siparişlerin kategori bazlı analizi
+with tek_çekim as (
+select  
+	count(distinct o.order_id) as order_count_tek_çekim,
+	p.product_category_name as category_name
+from orders as o
+left join order_items as oi
+	ON oi.order_id = o.order_id
+left join products as p
+	ON oi.product_id = p.product_id
+left join order_payments as op
+	ON op.order_id = o.order_id
+where op.payment_installments = 1
+group by 2
+order by 1 desc
+),
+-- taksitle ödenen siparişlerin kategori bazlı analizi
+taksit as (
+select  
+	count(distinct o.order_id) as order_count_taksit,
+	p.product_category_name as category_name 
+from orders as o
+left join order_items as oi
+	ON oi.order_id = o.order_id
+left join products as p
+	ON oi.product_id = p.product_id
+left join order_payments as op
+	ON op.order_id = o.order_id
+where op.payment_installments > 1 and payment_type = 'credit_card'
+group by 2
+order by 1 desc
+)
+select 
+	tç.category_name,
+	tç.order_count_tek_çekim,
+	t.order_count_taksit
+from tek_çekim as tç
+left join taksit as t 
+	ON t.category_name = tç.category_name
+where tç.category_name is not null 
+and t.order_count_taksit is not null
+order by t.order_count_taksit desc
+;
+
+-- Ans 2;
+select  
+	p.product_category_name,
+	count(distinct case when op.payment_installments = 1 then o.order_id end) as tek_çekim,
+	count(distinct case when op.payment_installments > 1 and payment_type = 'credit_card' then o.order_id end) as taksitli_ödeme
+from orders as o
+left join order_items as oi
+	ON oi.order_id = o.order_id
+left join products as p
+	ON oi.product_id = p.product_id
+left join order_payments as op
+	ON op.order_id = o.order_id
+where p.product_category_name is not null
+group by 1
+order by 3 desc
+;
+````
+|       |   category_name    | order_count_tek_çekim | order_count_taksit |
+|-------|--------------------|-----------------------|---------------------|
+|   1   |  "cama_mesa_banho" |         3535          |        5965         |
+|   2   |    "beleza_saude"  |         3880          |        5006         |
+|   3   | "relogios_presentes"|         1890          |        3794         |
+|   4   |  "esporte_lazer"   |         4299          |        3480         |
+|   5   | "moveis_decoracao" |         3152          |        3353         |
+|   6   | "utilidades_domesticas" |     2732          |        3197         |
+|   7   | "informatica_acessorios" |  4177          |        2562         |
+|   8   |    "cool_stuff"    |         1451          |        2217         |
+|   9   |    "brinquedos"    |         1902          |        2008         |
+|  10   |   "perfumaria"     |         1238          |        1945         |
+* Toplamda 72 satırlık çıktının 10 satırı görüntülenmektedir.
+
+## 🗝️ **Case 4 Dashboard :** 
+
+![image](https://github.com/hamzaugursumer/SQL-Capstone-Project/assets/127680099/5b772040-5408-4c72-a693-9e69ce40b027)
