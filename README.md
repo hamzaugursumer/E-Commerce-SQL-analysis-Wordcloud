@@ -320,3 +320,8 @@ order by 1 DESC
 |   6   |    12196    |  "Saturday"  |
 |   7   |     9014    |    "Sunday"  |
 |   8   |     160     |     [null]          |
+
+## 🗝️ **Case 1 Dashboard :** 
+
+![image](https://github.com/hamzaugursumer/SQL-Capstone-Project/assets/127680099/dfef4da6-f2f8-4360-98f6-2598adf7c7ac)
+
