@@ -19,4 +19,4 @@ Mağazaları ve ortakları tanımlayan tüm metinler Game of Thrones'un büyük 
 
 ## 📌 **Data Schema**
 
-![image](https://imgur.com/HRhd2Y0)
+![image](https://i.imgur.com/HRhd2Y0.png)
