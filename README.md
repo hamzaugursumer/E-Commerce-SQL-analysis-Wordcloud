@@ -1,6 +1,6 @@
 # 📑 **SQL Capstone Project - Brazilian E-Commerce Public Dataset by Olist**
 
-
+![image](https://github.com/hamzaugursumer/SQL-Capstone-Project/blob/main/dataset-cover.png)
 
 ## 📌 **Veri Seti Hakkında**
 Olist'ten Brezilya E-Ticaret Kamu Veri Seti
