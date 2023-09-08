@@ -16,3 +16,7 @@ Bir müşteri Olist Store'dan ürün satın aldıktan sonra satıcıya siparişi
 Bir siparişte birden fazla ürün olabilir.
 Her bir ürün farklı bir satıcı tarafından gönderilebilir.
 Mağazaları ve ortakları tanımlayan tüm metinler Game of Thrones'un büyük evlerinin isimleriyle değiştirildi.
+
+## 📌 **Data Schema**
+
+![image](https://imgur.com/HRhd2Y0)
