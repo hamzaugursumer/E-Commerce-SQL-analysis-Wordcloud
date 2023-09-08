@@ -698,3 +698,8 @@ order by 3 desc
 
 ![image](https://github.com/hamzaugursumer/SQL-Capstone-Project/assets/127680099/984be859-9369-4f15-bf26-a1400830911f)
 
+## **‼️ Not :**
+
+Bu projeyi tamamlamış olmaktan dolayı büyük bir mutluluk duyuyorum. E-ticaret verilerinin SQL ile analizini yaparak gerçek dünyadaki iş sorunlarına çözümler üretebilmek için SQL 'i kullanmanın ne kadar önemli olduğunu bir kez daha gördüm.
+Projeyi beğendiyseniz ve sizin için faydalı olduysa, lütfen GitHub repomu bir ⭐'la işaretlemeyi unutmayın. Bu, projenin daha fazla kişiye ulaşmasına ve geliştirilmesine katkıda bulunacaktır.
+Her türlü geri bildirim, öneri veya soru için açık bir şekilde iletişim kurmaktan çekinmeyin. Bu hem beni hem sizleri geliştirecek bir motivasyon kaynağı olabilir.
