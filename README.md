@@ -120,6 +120,7 @@ Bu çekirdek veri kümesidir. Her siparişten diğer tüm bilgileri bulabilirsin
 | order_estimated_delivery_date     | Timestamp indicating the estimated delivery date provided to the customer at the time of purchase. |
 
 🔴 **"Products" Veri Kümesi**
+
 Bu veri kümesi Olist tarafından satılan ürünlerle ilgili verileri içerir.
 
 | Column Name                | Description                                                           |
