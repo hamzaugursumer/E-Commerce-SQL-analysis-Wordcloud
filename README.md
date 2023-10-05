@@ -8,6 +8,9 @@ Hoş geldiniz! Bu, Olist Store'da yapılan siparişlerin Brezilya e-ticaret gene
 Bu gerçek ticari verilerdir, anonimleştirilmiştir ve inceleme metnindeki şirketlere ve ortaklara yapılan atıflar Game of Thrones'un büyük evlerinin isimleriyle değiştirilmiştir.
 
 * Dataset : [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
+* Veri setinin içerisindeki yorumları kullanarak Yaptığım **WordCloud** çalışmasına [buradan](https://github.com/hamzaugursumer/SQL-Capstone-Project/blob/main/Olist%20WordCloud.ipynb) ulaşabilirsiniz.
+
+
 
 ## 📌 **İçerik**
 Bu veri seti, Brezilya'daki pazar yerlerinin en büyük mağazası olan Olist tarafından cömertçe sağlanmıştır. Olist, Brezilya'nın her yerinden küçük işletmeleri sorunsuz ve tek bir sözleşmeyle kanallara bağlar. Bu tüccarlar ürünlerini Olist Store üzerinden satabilir ve Olist lojistik ortaklarını kullanarak doğrudan müşterilere gönderebilirler. Web sitemizde daha fazlasını görün: www.olist.com
