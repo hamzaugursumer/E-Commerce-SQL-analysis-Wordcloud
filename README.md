@@ -8,8 +8,10 @@ Hoş geldiniz! Bu, Olist Store'da yapılan siparişlerin Brezilya e-ticaret gene
 Bu gerçek ticari verilerdir, anonimleştirilmiştir ve inceleme metnindeki şirketlere ve ortaklara yapılan atıflar Game of Thrones'un büyük evlerinin isimleriyle değiştirilmiştir.
 
 * Dataset : [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
-* Veri setinin içerisindeki yorumları kullanarak Yaptığım **WordCloud** çalışmasına [buradan](https://github.com/hamzaugursumer/SQL-Capstone-Project/blob/main/Olist%20WordCloud.ipynb) ulaşabilirsiniz.
+* Veri setinin içerisindeki yorumları kullanarak Yaptığım **WordCloud** çalışmasının Notebook dosyasına [buradan](https://github.com/hamzaugursumer/SQL-Capstone-Project/blob/main/Olist%20WordCloud.ipynb) ulaşabilirsiniz.
+* **WordCloud** ;
 
+![image](https://github.com/hamzaugursumer/SQL-Capstone-Project/assets/127680099/646625cf-b7f6-44a3-9fd5-9f5ab1158f42)
 
 
 ## 📌 **İçerik**
